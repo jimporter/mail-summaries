@@ -2,26 +2,20 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
-var { ExtensionParent } = ChromeUtils.import(
+const { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
+const { ExtensionParent } = ChromeUtils.import(
   "resource://gre/modules/ExtensionParent.jsm"
 );
-var extension = ExtensionParent.GlobalManager.getExtension(
+const extension = ExtensionParent.GlobalManager.getExtension(
   "mailsummaries@mozillamessaging.com"
 );
-var { WindowInjector } = ChromeUtils.import(extension.rootURI.resolve(
+const { WindowInjector } = ChromeUtils.import(extension.rootURI.resolve(
   "api/WindowUtils.jsm"
 ));
 
-function showAccountCentral(window, url) {
-  let accountBox = window.document.getElementById("accountCentralBox");
-  window.document.getElementById("displayDeck").selectedPanel = accountBox;
+function summarizeFolder(window, messageDisplay) {
+  const url = "chrome://mailsummaries/content/folderSummary.xhtml";
 
-  // XXX: Handle various account types.
-  window.frames["accountCentralPane"].location.href = url;
-}
-
-function summarizeFolder(window, url, messageDisplay) {
   let folder = messageDisplay.folderDisplay.displayedFolder;
   if (!folder) { // A search tab, for example.
     window.gSummaryFrameManager.clear();
@@ -30,7 +24,8 @@ function summarizeFolder(window, url, messageDisplay) {
 
   messageDisplay.singleMessageDisplay = false;
   window.gSummaryFrameManager.loadAndCallback(url, function() {
-    // XXX: Initiate the summarization process.
+    let childWindow = window.gSummaryFrameManager.iframe.contentWindow;
+    childWindow.gFolderSummary.summarize(folder);
   });
 }
 
@@ -96,24 +91,7 @@ var mailsummaries = class extends ExtensionCommon.ExtensionAPI {
   getAPI(context) {
     return {
       mailsummaries: {
-        async setAccountCentral(url) {
-          injector.inject(
-            "accountCentral",
-            (window) => {
-              const fdw = window.FolderDisplayWidget;
-              const oldAccountCentral = fdw.prototype._showAccountCentral;
-              fdw.prototype._showAccountCentral = showAccountCentral.bind(
-                null, window, context.extension.rootURI.resolve(url)
-              );
-              return oldAccountCentral;
-            },
-            (window, data) => {
-              window.FolderDisplayWidget.prototype._showAccountCentral = data;
-            },
-          );
-        },
-
-        async setFolderSummary(url) {
+        async setupFolderSummary() {
           injector.inject(
             "folderSummary",
             (window) => {
@@ -125,9 +103,7 @@ var mailsummaries = class extends ExtensionCommon.ExtensionAPI {
                 folderPaneClickHandler: folderPaneClickHandler,
               };
 
-              window.summarizeFolder = summarizeFolder.bind(
-                null, window, context.extension.rootURI.resolve(url)
-              );
+              window.summarizeFolder = summarizeFolder.bind(null, window);
               window.FolderDisplayListenerManager.registerListener(
                 folderDisplayListener
               );
@@ -152,6 +128,17 @@ var mailsummaries = class extends ExtensionCommon.ExtensionAPI {
   onStartup() {
     console.log("mailsummaries API startup");
     injector = new WindowInjector("mail:3pane");
+
+    const aomStartup = Cc[
+      "@mozilla.org/addons/addon-manager-startup;1"
+    ].getService(Ci.amIAddonManagerStartup);
+    const manifestURI = Services.io.newURI(
+      "manifest.json", null, this.extension.rootURI
+    );
+    this.chromeHandle = aomStartup.registerChrome(manifestURI, [
+      ["content", "mailsummaries", "content/"],
+      ["locale", "mailsummaries", "en-US", "locale/en-US/"],
+    ]);
   }
 
   onShutdown() {

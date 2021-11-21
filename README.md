@@ -1,7 +1,20 @@
 # Mail Summaries
 
-This is an experiment to reimplement the Mail Summaries add-on for Thunderbird 78.
-There's not much here yet though, so come back later!
+This is an experiment to reimplement the Mail Summaries add-on for Thunderbird
+91+. It's very WIP, so you probably shouldn't use it unless you're extremely
+brave!
+
+## What Works
+
+- Folder Summary
+
+## What's Broken
+
+- Account Summaries
+- Context menus
+- Platform-specific theming
+- Non-English locales
+- Prefs (including unsetting "remember selected message")
 
 ## License
 

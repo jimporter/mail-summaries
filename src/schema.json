@@ -1,0 +1,34 @@
+[
+  {
+    "namespace": "mailsummaries",
+    "functions": [
+      {
+        "name": "setAccountCentral",
+        "type": "function",
+        "description": "",
+        "async": true,
+        "parameters": [
+          {
+            "name": "url",
+            "type": "string",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "name": "setFolderSummary",
+        "type": "function",
+        "description": "",
+        "async": true,
+        "parameters": [
+          {
+            "name": "url",
+            "type": "string",
+            "description": ""
+          }
+        ]
+      }
+
+    ]
+  }
+]

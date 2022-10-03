@@ -54,7 +54,7 @@ function composeMessageToAddress(addresses, server, format) {
  * @return The formatted display name.
  */
 function formatDisplayNameNoYou(emailAddress, headerDisplayName) {
-  let card = DisplayNameUtils.getCardForEmail(emailAddress).card;
+  let card = MailServices.ab.cardForEmailAddress(emailAddress);
 
   if (card) {
     if (headerDisplayName == emailAddress ||

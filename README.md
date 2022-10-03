@@ -1,7 +1,7 @@
 # Mail Summaries
 
 This is an experiment to reimplement the Mail Summaries add-on for Thunderbird
-91+. It's very WIP, so you probably shouldn't use it unless you're extremely
+102+. It's very WIP, so you probably shouldn't use it unless you're extremely
 brave!
 
 ## What Works

@@ -664,6 +664,7 @@ class SparklineWidget {
     // #heading_wrapper for the sparkline subset.
     let div = document.querySelector("#heading_wrapper");
     let style = window.getComputedStyle(div);
+    // FIXME: Sometimes this runs too early and we don't get a good color.
     const fg = ColorUtils.colorFromStyle(
       style.getPropertyValue("color")
     );

@@ -326,7 +326,7 @@ function hsva(hue, saturation, value, alpha) {
  * @return The Color object.
  */
 function colorFromStyle(style) {
-  const re = /(?:rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)/;
+  const re = /rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)/;
   const v = re.exec(style);
   return new Color(parseInt(v[1]), parseInt(v[2]), parseInt(v[3]));
 }

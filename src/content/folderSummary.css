@@ -2,14 +2,17 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-@import url("chrome://messenger/content/sharedsummary.css");
-
-/* shared CSS for the cross-platform aspects of the folder summary page */
+/* Shared CSS for the cross-platform aspects of the folder summary page */
 
 body {
   background-color: -moz-Field; /*#fff*/
   color: -moz-FieldText;
   line-height: 1.3;
+  margin: 0;
+}
+
+.hidden {
+  display: none !important;
 }
 
 /* The heading area */

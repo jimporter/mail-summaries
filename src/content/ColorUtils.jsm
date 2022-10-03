@@ -35,7 +35,7 @@ function hex2rgb(hexString) {
  * @param low The minimum value.
  * @param high The maximum value.
  */
-function clamp(value, aLow, aHigh) {
+function clamp(value, low, high) {
   return Math.max(low, Math.min(high, value));
 }
 

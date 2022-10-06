@@ -15,8 +15,6 @@ const { MailUtils } = ChromeUtils.import("resource:///modules/MailUtils.jsm");
 const { PluralStringFormatter } = ChromeUtils.import(
   "resource:///modules/TemplateUtils.jsm");
 
-const { ColorUtils } = ChromeUtils.import(
-  "chrome://mailsummaries/content/ColorUtils.jsm");
 const { MessageUtils } = ChromeUtils.import(
   "chrome://mailsummaries/content/MessageUtils.jsm");
 const { Stats } = ChromeUtils.import(
@@ -659,19 +657,6 @@ class SparklineWidget {
     this.dates = new Stats.AccumulatingHistogram(Stats.bin_by_day(30));
     this.stale = true;
     this.root.classList.add("hidden");
-
-    // Find an appropriate color that contrasts with the colors used in the
-    // #heading_wrapper for the sparkline subset.
-    let div = document.querySelector("#heading_wrapper");
-    let style = window.getComputedStyle(div);
-    // FIXME: Sometimes this runs too early and we don't get a good color.
-    const fg = ColorUtils.colorFromStyle(
-      style.getPropertyValue("color")
-    );
-    const bg = ColorUtils.colorFromStyle(
-      style.getPropertyValue("background-color")
-    );
-    this.unhighlightColor = ColorUtils.complement(fg, bg);
   }
 
   /**
@@ -723,26 +708,26 @@ class SparklineWidget {
         .left(function() { return 5 * this.index + margin; })
         .height((d) => d / scale)
         .bottom(12)
-        .fillStyle("HighlightText");
+        .fillStyle("var(--spark-color)");
     mainHisto.add(pv.Label)
         .textAlign("left")
         .bottom(0)
         .left(0)
         .text(formatString("oneMonthAgo"))
-        .textStyle("HighlightText");
+        .textStyle("var(--header-text-color)");
     mainHisto.add(pv.Label)
         .textAlign("right")
         .bottom(0)
         .right(0)
         .text(formatString("now"))
-        .textStyle("HighlightText");
+        .textStyle("var(--header-text-color)");
 
     this.subsetHisto = mainHisto.add(pv.Bar)
         .width(4)
         .left(function() { return 5 * this.index + margin; })
         .height((d) => d / scale)
         .bottom(12)
-        .fillStyle(this.unhighlightColor.toString());
+        .fillStyle("var(--spark-subset-color)");
 
     mainHisto.render();
     this.stale = false;

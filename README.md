@@ -13,7 +13,6 @@ brave!
 - Account Summaries
 - Context menus
 - Platform-specific theming
-- Non-English locales
 - Prefs (including unsetting "remember selected message")
 
 ## License

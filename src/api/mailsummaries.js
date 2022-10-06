@@ -221,6 +221,10 @@ var mailsummaries = class extends ExtensionCommon.ExtensionAPI {
     this.chromeHandle = aomStartup.registerChrome(manifestURI, [
       ["content", "mailsummaries", "content/"],
       ["locale", "mailsummaries", "en-US", "locale/en-US/"],
+      ["locale", "mailsummaries", "cs-CZ", "locale/cs-CZ/"],
+      ["locale", "mailsummaries", "de", "locale/de/"],
+      ["locale", "mailsummaries", "fr", "locale/fr/"],
+      ["locale", "mailsummaries", "ro", "locale/ro/"],
     ]);
   }
 

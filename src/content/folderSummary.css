@@ -72,7 +72,7 @@ body {
 
 #messageCount {
   white-space: nowrap;
-  -moz-margin-start: 1em;
+  margin-inline-start: 1em;
   font-size: small;
 }
 
@@ -283,6 +283,6 @@ body[dir="rtl"] .star {
 }
 
 #spinner {
-  -moz-margin-end: 1ex;
+  margin-inline-end: 1ex;
   vertical-align: middle;
 }

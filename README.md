@@ -12,7 +12,6 @@ brave!
 
 - Account Summaries
 - Context menus
-- Platform-specific theming
 - Prefs (including unsetting "remember selected message")
 
 ## License

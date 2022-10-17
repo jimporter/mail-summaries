@@ -1,5 +1,5 @@
 ADDON_NAME := mailsummaries
-ADDON_VERSION := $(shell python -c "import json; print(json.load(open('src/manifest.json'))['version'])")
+ADDON_VERSION := $(shell jq --raw-output '.version' src/manifest.json)
 
 .PHONY: package
 package:

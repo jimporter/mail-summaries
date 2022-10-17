@@ -42,6 +42,11 @@ body {
   display: none !important;
 }
 
+menu[type="context"] {
+  /* FIXME: Support context menus again! */
+  display: none !important;
+}
+
 /* The heading area */
 
 #heading_wrapper {

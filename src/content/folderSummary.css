@@ -12,10 +12,6 @@
   --info-text-color: GrayText;
   --widget-heading-color: -moz-nativehyperlinktext;
 
-  /* These should probably be OS-specific... */
-  --header-background-color: AppWorkspace;
-  --header-text-color: WindowText;
-
   background-color: var(--body-background-color);
   color: var(--body-text-color);
   appearance: none;
@@ -30,6 +26,41 @@
     --header-background-color: #323234;
     --header-text-color: var(--body-text-color);
     --splitter-color: #606064;
+  }
+}
+
+@media not (prefers-color-scheme: dark) {
+  @media (-moz-platform: linux) {
+    :root {
+      --header-background-color: AppWorkspace;
+      --header-text-color: WindowText;
+    }
+  }
+
+  @media (-moz-platform: windows) {
+    :root {
+      --header-background-color: ButtonFace;
+      --header-text-color: WindowText;
+    }
+
+    @media (-moz-windows-compositor) and (-moz-windows-default-theme) {
+      :root {
+        --header-background-color: #f8f8f8;
+      }
+    }
+
+    @media (-moz-platform: windows-win7) and (-moz-windows-default-theme) {
+      :root {
+        --header-background-color: rgb(233, 239, 245);
+      }
+    }
+  }
+
+  @media (-moz-platform: macos) {
+    :root {
+      --header-background-color: -moz-Dialog;
+      --header-text-color: -moz-DialogText;
+    }
   }
 }
 
